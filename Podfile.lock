@@ -1,0 +1,113 @@
+PODS:
+  - Alamofire (4.7.2)
+  - Argo (4.1.2):
+    - Runes (>= 4.0.0)
+  - CFNotify (1.0.2)
+  - CoreStore (5.1.0)
+  - Cosmos (16.0.0)
+  - Curry (4.0.0)
+  - HGPlaceholders (0.3.0)
+  - JWTDecode (2.1.1)
+  - KeychainAccess (3.1.1)
+  - Kingfisher (4.8.0)
+  - Moya (11.0.2):
+    - Moya/Core (= 11.0.2)
+  - Moya-Argo (5.0.0):
+    - Moya-Argo/Core (= 5.0.0)
+  - Moya-Argo/Core (5.0.0):
+    - Argo (~> 4.1.2)
+    - Moya (~> 11.0.0)
+  - Moya/Core (11.0.2):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
+  - Result (3.2.4)
+  - Runes (4.1.0)
+  - SkyFloatingLabelTextField (3.4.1)
+  - StatusAlert (0.11.0)
+  - SwiftValidator (4.0.0)
+  - SwiftyJSON (4.1.0)
+  - TransitionButton (0.4.0)
+  - UIEmptyState (3.1.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - Argo
+  - CFNotify
+  - CoreStore
+  - Cosmos (~> 16.0)
+  - Curry
+  - HGPlaceholders
+  - JWTDecode (~> 2.1)
+  - KeychainAccess
+  - Kingfisher (~> 4.0)
+  - Moya (~> 11.0)
+  - Moya-Argo
+  - Runes
+  - SkyFloatingLabelTextField (~> 3.0)
+  - StatusAlert (from `https://github.com/LowKostKustomz/StatusAlert`)
+  - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
+  - SwiftyJSON
+  - TransitionButton
+  - UIEmptyState
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Argo
+    - CFNotify
+    - CoreStore
+    - Cosmos
+    - Curry
+    - HGPlaceholders
+    - JWTDecode
+    - KeychainAccess
+    - Kingfisher
+    - Moya
+    - Moya-Argo
+    - Result
+    - Runes
+    - SkyFloatingLabelTextField
+    - SwiftyJSON
+    - TransitionButton
+    - UIEmptyState
+
+EXTERNAL SOURCES:
+  StatusAlert:
+    :git: https://github.com/LowKostKustomz/StatusAlert
+  SwiftValidator:
+    :branch: master
+    :git: https://github.com/jpotts18/SwiftValidator.git
+
+CHECKOUT OPTIONS:
+  StatusAlert:
+    :commit: f76c815a7774b4be42912c1a7931ff4624f95d09
+    :git: https://github.com/LowKostKustomz/StatusAlert
+  SwiftValidator:
+    :commit: ba27b0e501bf542b5c1a97bed8f706d12fb2d4f4
+    :git: https://github.com/jpotts18/SwiftValidator.git
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Argo: 5db06502fc1222d83011f574243089dab25202ff
+  CFNotify: e32996ad9034b4d64b30d685e456ea4b83fecb49
+  CoreStore: 5fd51cbe7ea2d7b4dfc6327031ab6ff6f7c63175
+  Cosmos: 7bcee0fa858a9355a214f2a181be5dffcee42c81
+  Curry: 887c0b9de9a9947820a59557459c7895e76d7b90
+  HGPlaceholders: 2df01c51b04a30acd0b8c9c7161c7cdde4541109
+  JWTDecode: 83e8b381aafe27158d9f692cbdca2b12d61d460c
+  KeychainAccess: 7bd430028059754a3debab3cfc0bd1fc7fb85df3
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  Moya: a725035953bc1c0eb1be505ab903984501d82440
+  Moya-Argo: 96f8484de788b815cc2cd396a32ff9c92be8aa93
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  Runes: 72a67a5bbbe1b5fdae08b5a01b10c60d83fc69aa
+  SkyFloatingLabelTextField: 8085f20f57f74a00cfcae58099299faa1a971035
+  StatusAlert: 4b7de56a44ea0302fe95fef1fadb1733649f409a
+  SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
+  TransitionButton: d271030914c84a00b54b4d983446944d2875e7ba
+  UIEmptyState: 801fb97bc13d0ec75e32ba0a111538683aea69f5
+
+PODFILE CHECKSUM: e9d0a22cb06f880da53e1d17b50e74517e3b5986
+
+COCOAPODS: 1.5.2

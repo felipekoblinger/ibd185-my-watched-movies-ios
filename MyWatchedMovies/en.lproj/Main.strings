@@ -1,0 +1,36 @@
+
+/* Class = "UILabel"; text = "Movie Title"; ObjectID = "1Yj-eh-Nlg"; */
+"1Yj-eh-Nlg.text" = "Movie Title";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "Ca2-cF-eac"; */
+"Ca2-cF-eac.text" = "Description";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "HLb-we-uhH"; */
+"HLb-we-uhH.placeholder" = "Password";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "NpR-7K-5u2"; */
+"NpR-7K-5u2.title" = "Settings";
+
+/* Class = "UILabel"; text = "Welcome to My Watched Movies"; ObjectID = "R4z-bd-qpn"; */
+"R4z-bd-qpn.text" = "Welcome to My Watched Movies";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "TE0-if-SaR"; */
+"TE0-if-SaR.placeholder" = "Username";
+
+/* Class = "UILabel"; text = "Activity"; ObjectID = "YnC-Eg-rYI"; */
+"YnC-Eg-rYI.text" = "Activity";
+
+/* Class = "UILabel"; text = "Add Movie"; ObjectID = "dee-II-Hmh"; */
+"dee-II-Hmh.text" = "Add Movie";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "gQS-A8-eDs"; */
+"gQS-A8-eDs.normalTitle" = "Login";
+
+/* Class = "UITabBarItem"; title = "Movies"; ObjectID = "hSH-rx-SaG"; */
+"hSH-rx-SaG.title" = "Movies";
+
+/* Class = "UITabBarItem"; title = "Activity"; ObjectID = "opg-Ab-8ns"; */
+"opg-Ab-8ns.title" = "Activity";
+
+/* Class = "UITabBarItem"; title = "Add Movie"; ObjectID = "vie-Y0-1AU"; */
+"vie-Y0-1AU.title" = "Add Movie";
