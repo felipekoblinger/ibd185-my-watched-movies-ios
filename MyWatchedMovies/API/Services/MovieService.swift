@@ -13,6 +13,7 @@ enum MovieService {
     case addMovie(date: Date, rating: Int, type: String, theMovieDatabase: TheMovieDatabase)
     case movies()
     case deleteMovie(uuid: String)
+    case updateMovie(uuid: String, date: Date, rating: Int, type: String)
 }
 
 extension MovieService: TargetType {
@@ -24,7 +25,7 @@ extension MovieService: TargetType {
         switch self {
         case .addMovie, .movies:
             return "/movies/"
-        case .deleteMovie(let uuid):
+        case .deleteMovie(let uuid), .updateMovie(let uuid, _, _, _):
             return "/movies/\(uuid)"
         }
     }
@@ -34,6 +35,7 @@ extension MovieService: TargetType {
         case .addMovie: return .post
         case .movies: return .get
         case .deleteMovie: return .delete
+        case .updateMovie: return .put
         }
 
     }
@@ -46,6 +48,8 @@ extension MovieService: TargetType {
             return "[{\"title\": \"anytitle\"}]".data(using: String.Encoding.utf8)!
         case .deleteMovie:
             return "".data(using: String.Encoding.utf8)!
+        case .updateMovie:
+            return "[{\"title\": \"anytitle\"}]".data(using: String.Encoding.utf8)!
         }
     }
     
@@ -56,28 +60,52 @@ extension MovieService: TargetType {
             let theMovieDatabaseId = theMovieDatabase.id!
             
             let posterPath = theMovieDatabase.posterPath ?? "unknown"
+            let overview = theMovieDatabase.overview ?? "unknown"
+            var genres = ""
+            
+            if !(theMovieDatabase.genres?.isEmpty)! {
+                let stringArray = theMovieDatabase.genres?.map{ id in String(id) }
+                genres = (stringArray?.joined(separator: ","))!
+            }
             
             let dateFormatted = DateConstants.dateFormatter.string(from: date)
             let typeUppercased = type.uppercased()
             
+            var releaseDateShow = ""
+            if !(theMovieDatabase.releaseDate?.isEmpty)! {
+                let releaseDateFormat = DateFormatter()
+                releaseDateFormat.dateFormat = "yyyy-MM-dd"
+                let releaseDate = releaseDateFormat.date(from: theMovieDatabase.releaseDate!)
+                releaseDateShow = DateConstants.dateFormatter.string(from: releaseDate!)
+            }
+
             return .requestParameters(parameters:
                 ["date": dateFormatted,
                  "rating": rating,
                  "title": title,
                  "posterPath": posterPath,
                  "theMovieDatabaseId": theMovieDatabaseId,
-                 "type": typeUppercased
+                 "type": typeUppercased,
+                 "overview": overview,
+                 "genres": genres,
+                 "releaseDate": releaseDateShow
                 ], encoding: JSONEncoding.default)
         case .movies:
             return .requestPlain
         case .deleteMovie:
             return .requestPlain
+            
+        case .updateMovie(_, let date, let rating, let type):
+            let dateFormatted = DateConstants.dateFormatter.string(from: date)
+            let typeUppercased = type.uppercased()
+            
+            return .requestParameters(parameters: ["date": dateFormatted, "type": typeUppercased, "rating": rating],
+                                      encoding: JSONEncoding.default)
         }
+        
     }
     
     var headers: [String : String]? {
         return nil
     }
-    
-
 }

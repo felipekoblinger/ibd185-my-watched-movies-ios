@@ -12,8 +12,19 @@ class DateConstants {
     static var dateFormatter: DateFormatter {
         get {
             let dateFormatter = DateFormatter()
+            dateFormatter.isLenient = true
             dateFormatter.dateFormat = "dd-MM-yyyy"
             return dateFormatter
+        }
+    }
+    
+    static var dateFormatterUS: DateFormatter {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.isLenient = true
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter
+
         }
     }
     

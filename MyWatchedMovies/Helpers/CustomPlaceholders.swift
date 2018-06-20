@@ -8,7 +8,7 @@ extension PlaceholdersProvider {
         loadingStyle.isAnimated = false
 
         var loadingData: PlaceholderData = .loading
-        loadingData.image = UIImage(named: "Table Loading")
+        loadingData.image = nil
         loadingData.action = nil
         let loading = Placeholder(data: loadingData, style: loadingStyle, key: .loadingKey)
         
@@ -38,7 +38,7 @@ extension PlaceholdersProvider {
         var searchData = PlaceholderData()
         searchData.title = NSLocalizedString("Type anything to search", comment: "")
         searchData.subtitle = NSLocalizedString("Ie.: Lord of the Rings", comment: "")
-        searchData.image = UIImage(named: "Table Searching")
+        searchData.image = UIImage(named: "Table Searching")//?.resizeImage(CGSize.init(width: 180, height: 180))
         searchData.action = nil
         
         let placeholder = Placeholder(data: searchData, style: searchStyle, key: PlaceholderKey.custom(key: "search"))

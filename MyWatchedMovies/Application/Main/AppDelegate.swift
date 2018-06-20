@@ -18,7 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var timer: Timer!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
+        _ = CoreStoreDefault()
+
         if AuthenticationHelper.isLogged() {
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let mainUITabBarController = mainStoryboard.instantiateViewController(withIdentifier: "PrincipalUITabBarController") as! PrincipalUITabBarController

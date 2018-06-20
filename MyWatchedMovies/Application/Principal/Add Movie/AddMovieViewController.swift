@@ -12,6 +12,7 @@ import Kingfisher
 import TransitionButton
 import Cosmos
 import StatusAlert
+import CFNotify
 
 import Moya_Argo
 import Moya
@@ -42,6 +43,9 @@ class AddMovieViewController: UIViewController {
         backgroundImageView.image = moviePosterImage
         movieOverviewTextView.text = theMovieDatabase.overview!
         
+        /* Define maximum date */
+        self.movieDateDatePicker.maximumDate = Date()
+        
         if (moviePosterImageView?.image == nil) {
             ImageDownloader.default.downloadTimeout = 1
             
@@ -58,6 +62,13 @@ class AddMovieViewController: UIViewController {
                                              options: [.transition(.fade(0.2))])
         }
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        /* Setting scroll to top as default in TextView */
+        self.movieOverviewTextView.setContentOffset(CGPoint.zero, animated: false)
+    }
+    
     @IBAction func submitAction(_ button: TransitionButton) {
         button.startAnimation()
         
@@ -77,8 +88,9 @@ class AddMovieViewController: UIViewController {
                 button.stopAnimation(animationStyle: .expand, completion: {
                     if response.statusCode == 201 {
                         let movieJson = try! response.mapJSON() as! [String: Any]
-//                        CoreStoreDefault()
-                        try! CoreStore.addStorageAndWait()
+                        
+                        CoreStoreDefault.addStorageAndWait()
+                        
                         /* Adding to CoreData */
                         CoreStore.perform(asynchronous: { (transaction) -> Void in
                             try! _ = transaction.importObject(
@@ -86,12 +98,8 @@ class AddMovieViewController: UIViewController {
                                 source: movieJson
                             )
                         },
-                        completion: { _ in
-                            print("Completion done. Going to performSegue()")
+                        completion: { _ in })
 
-                        })
-
-                        
                         self.performSegue(withIdentifier: "unwindToSelectMovieController", sender: self)
                         let statusAlert = StatusAlert.instantiate(withImage: UIImage(named: "Movie Added"),
                                                                   title: "Movied added!",

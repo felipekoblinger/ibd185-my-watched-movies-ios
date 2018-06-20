@@ -17,11 +17,13 @@ import UIEmptyState
 
 class MoviesViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBAction func unwindToMoviesViewController(segue:UIStoryboardSegue) { }
     
     /* List Monitor */
     let monitor: ListMonitor<MovieEntity> = {
-        CoreStoreDefault()
-        try! CoreStore.addStorageAndWait()
+        
+        /* Add Storage */
+        CoreStoreDefault.addStorageAndWait()
         
         return CoreStore.monitorSectionedList(
             From<MovieEntity>()
@@ -39,6 +41,9 @@ class MoviesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /* Navigation Bar */
+        navigationController?.navigationBar.tintColor = .white
         
         /* Managing Data Source of `tableView` */
         tableView.dataSource = self
@@ -60,6 +65,19 @@ class MoviesViewController: UIViewController {
         
         /*  Fix black-screen when switching between tabs */
         self.definesPresentationContext = true
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "UpdateMovieSegue") {
+            /* Passing Data */
+            let updateMovieViewController: UpdateMovieViewController = segue.destination as! UpdateMovieViewController
+            let indexPath = self.tableView.indexPathForSelectedRow!
+            let cell = self.tableView.cellForRow(at: indexPath) as! MoviesTableViewCell
+            let movieEntity = self.monitor[indexPath]
+            
+            updateMovieViewController.moviePosterImage = cell.movieImageView?.image
+            updateMovieViewController.movieEntity = movieEntity
+        }
     }
     
     @objc func fetchMoviesRefreshControl(_ refreshControl: UIRefreshControl) {
@@ -111,14 +129,20 @@ class MoviesViewController: UIViewController {
         let model: MovieEntity
         model = self.monitor[indexPath]
         
-        /* Title Label */
+        /* Title Label */   
         cell.movieTitleLabel.text = model.title.value
+        
+        /* Type Label */
+        cell.movieTypeLabel.text = model.type.value.uppercased()
+        
+        /* Genres Label */
+        cell.movieGenresLabel.text = model.showGenres()
         
         /* Date Label */
         cell.movieDateLabel.text = DateConstants.dateFormatter.string(from: model.date.value)
         
         /* Created At Label */
-        cell.movieCreatedAtLabel.text = "Created: " + DateConstants.dateTimeFormatter.string(from: model.createdAt.value)
+        cell.movieCreatedAtLabel.text = DateConstants.dateTimeFormatter.string(from: model.createdAt.value)
         
         /* Rating Cosmos View */
         cell.movieRatingCosmosView.rating = Double(model.rating.value)
@@ -148,13 +172,11 @@ extension MoviesViewController: ListObserver {
     }
     
     func listMonitorDidRefetch(_ monitor: ListMonitor<MovieEntity>) {
-        print("listMonitorDidRefetch triggered")
     }
 }
 
 extension MoviesViewController: ListSectionObserver {
     func listMonitor(_ monitor: ListMonitor<MovieEntity>, didInsertObject object: MovieEntity, toIndexPath indexPath: IndexPath) {
-        print("listMonitor(_ monitor: ListMonitor<MovieEntity>, didInsertObject object: MovieEntity, toIndexPath indexPath: IndexPath)")
         self.tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
@@ -165,23 +187,19 @@ extension MoviesViewController: ListSectionObserver {
     }
     
     func listMonitor(_ monitor: ListMonitor<MovieEntity>, didDeleteObject object: MovieEntity, fromIndexPath indexPath: IndexPath) {
-        print("listMonitor(_ monitor: ListMonitor<MovieEntity>, didDeleteObject object: MovieEntity, fromIndexPath indexPath: IndexPath)")
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func listMonitor(_ monitor: ListMonitor<MovieEntity>, didMoveObject object: MovieEntity, fromIndexPath: IndexPath, toIndexPath: IndexPath) {
-        print("listMonitor(_ monitor: ListMonitor<MovieEntity>, didMoveObject object: MovieEntity, fromIndexPath: IndexPath, toIndexPath: IndexPath)")
         self.tableView.deleteRows(at: [fromIndexPath], with: .automatic)
         self.tableView.insertRows(at: [toIndexPath], with: .automatic)
     }
     
     func listMonitor(_ monitor: ListMonitor<MovieEntity>, didInsertSection sectionInfo: NSFetchedResultsSectionInfo, toSectionIndex sectionIndex: Int) {
-        print("listMonitor(_ monitor: ListMonitor<MovieEntity>, didInsertSection sectionInfo: NSFetchedResultsSectionInfo, toSectionIndex sectionIndex: Int)")
         self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .automatic)
     }
     
     func listMonitor(_ monitor: ListMonitor<MovieEntity>, didDeleteSection sectionInfo: NSFetchedResultsSectionInfo, fromSectionIndex sectionIndex: Int) {
-        print("listMonitor(_ monitor: ListMonitor<MovieEntity>, didDeleteSection sectionInfo: NSFetchedResultsSectionInfo, fromSectionIndex sectionIndex: Int)")
         self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .automatic)
     }
 }
@@ -278,7 +296,7 @@ extension MoviesViewController: UIEmptyStateDataSource {
     var emptyStateTitle: NSAttributedString {
         let attrs = [NSAttributedStringKey.foregroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 1.00),
                      NSAttributedStringKey.font: UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.semibold)]
-        return NSAttributedString(string: "No movies yet...", attributes: attrs)
+        return NSAttributedString(string: "No movies...", attributes: attrs)
     }
     
     var emptyStateDetailMessage: NSAttributedString? {
@@ -296,6 +314,6 @@ extension MoviesViewController: UIEmptyStateDelegate { }
 
 extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)  {
-        print(indexPath)
+        self.performSegue(withIdentifier: "UpdateMovieSegue", sender: self)
     }
 }

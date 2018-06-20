@@ -18,6 +18,7 @@ target 'MyWatchedMovies' do
   pod 'Alamofire'
   pod 'Moya', '~> 11.0'
   pod 'Moya-Argo'
+  pod 'PromiseKit', '~> 6.0'
   # Extracting Models
   pod 'Argo'
   pod 'Curry'
@@ -39,4 +40,7 @@ target 'MyWatchedMovies' do
   pod 'HGPlaceholders'
   pod 'UIEmptyState'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
+  pod 'Charts'
+  pod 'PopupDialog', '~> 0.7'
+  pod 'SkeletonView'
 end

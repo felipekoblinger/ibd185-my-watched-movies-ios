@@ -8,9 +8,28 @@
 
 import Foundation
 import Moya
+import SwiftyJSON
+import PromiseKit
 
 enum AuthService {
     case auth(username: String, password: String)
+    
+    static func promiseAuth(username: String, password: String) -> Promise<JSON> {
+        let provider = MoyaProvider<AuthService>()
+        return Promise {
+            promise in
+            provider.request(.auth(username: username, password: password)) { result in
+                switch result {
+                case let .success(response):
+                    let json = JSON(response.data)
+                    promise.fulfill(json)
+                case let .failure(error):
+                    promise.reject(error)
+                }
+            }
+        }
+    }
+        
 }
 
 extension AuthService: TargetType {
@@ -49,5 +68,4 @@ extension AuthService: TargetType {
     var headers: [String : String]? {
         return nil
     }
-
 }

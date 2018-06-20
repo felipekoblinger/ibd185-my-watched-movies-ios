@@ -15,4 +15,5 @@ class SelectMovieTableViewCell: UITableViewCell {
     @IBOutlet weak var movieOverviewLabel: UILabel!
     @IBOutlet weak var movieReleaseDateLabel: UILabel!
     @IBOutlet weak var movieTitleLabel: UILabel!
+    @IBOutlet weak var movieGenresLabel: UILabel!
 }

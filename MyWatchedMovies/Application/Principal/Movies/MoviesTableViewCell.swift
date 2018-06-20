@@ -12,8 +12,11 @@ import Cosmos
 class MoviesTableViewCell: UITableViewCell {
     @IBOutlet weak var movieDateLabel: UILabel!
     @IBOutlet weak var movieTitleLabel: UILabel!
-    @IBOutlet weak var movieCreatedAtLabel: UILabel!
+    @IBOutlet weak var movieTypeLabel: UILabel!
+    @IBOutlet weak var movieGenresLabel: UILabel!
     
+    @IBOutlet weak var movieCreatedAtLabel: UILabel!
+
     @IBOutlet weak var movieRatingCosmosView: CosmosView!
     @IBOutlet weak var movieImageView: UIImageView!
 }

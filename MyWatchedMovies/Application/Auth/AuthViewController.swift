@@ -73,6 +73,8 @@ class AuthViewController: UIViewController {
                     keychain["token"] = data["token"].stringValue
                     
                     button.stopAnimation(animationStyle: .expand, completion: {
+                        self.usernameTextField.text = ""
+                        self.passwordTextField.text = ""
                         self.performSegue(withIdentifier: "MainTabBar", sender: self)
                     })
                 case 401:

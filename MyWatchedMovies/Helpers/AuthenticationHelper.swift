@@ -16,10 +16,18 @@ class AuthenticationHelper {
     private static let keychain = Keychain(service: KeychainConstants.MainService)
     
     static func isLogged() -> Bool {
-        if let token = self.keychain["token"] {
-            let jwt = try! decode(jwt: token)
-            return jwt.expired
+        
+        let token = self.keychain["token"]
+        
+        if token == nil {
+            return false
         }
-        return false
+        
+        guard !(token?.isEmpty)! else {
+            return false
+        }
+        
+        let jwt = try! decode(jwt: token!)
+        return !jwt.expired
     }
 }

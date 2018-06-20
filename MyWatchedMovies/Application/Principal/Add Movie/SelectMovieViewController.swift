@@ -22,6 +22,7 @@ class SelectMovieViewController: UIViewController {
     
     var searchTask: DispatchWorkItem?
     var searchArray = [TheMovieDatabase]()
+    var keyboardHeight = CGFloat()
     let searchPlaceholder = PlaceholderKey.custom(key: "search")
     
     /* MARK: Create UISearch Controller */
@@ -49,6 +50,10 @@ class SelectMovieViewController: UIViewController {
         navigationItem.searchController = movieSearchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
+        self.hideKeyboardWhenTappedAround()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
         /* Delegate Searchbar to class */
         movieSearchController.searchBar.delegate = self
         movieSearchController.searchResultsUpdater = self
@@ -64,7 +69,16 @@ class SelectMovieViewController: UIViewController {
         /*  Fix black-screen when switching between tabs */
         self.definesPresentationContext = true
     }
-     
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let frame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+                return
+        }
+        self.keyboardHeight = frame.height
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "AddMovieCreateSegue") {
             /* Passing Data */
@@ -82,6 +96,10 @@ class SelectMovieViewController: UIViewController {
 extension SelectMovieViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if !searchController.isActive {
+            
+            /* Back frame */
+            self.tableView.contentInset = UIEdgeInsets(top: self.tableView.contentInset.top, left: 0, bottom: 0, right: 0)
+            
             self.searchArray = [TheMovieDatabase]()
             self.tableView.reloadData()
             self.tableView.showCustomPlaceholder(with: searchPlaceholder)
@@ -92,7 +110,12 @@ extension SelectMovieViewController: UISearchResultsUpdating {
 extension SelectMovieViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar,
                    textDidChange searchText: String) {
+        /* Set frame */
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.keyboardHeight * 0.5, right: 0)
+        self.tableView.contentInset = contentInsets
+        
         self.tableView.showLoadingPlaceholder()
+
         
         var time = 0.5
         
@@ -114,6 +137,9 @@ extension SelectMovieViewController: UISearchBarDelegate {
     func searchUpdate() {
         var value = self.movieSearchController.searchBar.text
         if value?.utf8.count == 0 {
+            /* Back frame */
+            self.tableView.contentInset = UIEdgeInsets(top: self.tableView.contentInset.top, left: 0, bottom: 0, right: 0)
+            
             searchArray = [TheMovieDatabase]()
             tableView.reloadData()
             tableView.showCustomPlaceholder(with: searchPlaceholder)
@@ -134,6 +160,10 @@ extension SelectMovieViewController: UISearchBarDelegate {
                         self.tableView.showNoResultsPlaceholder()
                         self.searchArray = [TheMovieDatabase]()
                     }
+                    
+                    /* Back frame */
+                    self.tableView.contentInset = UIEdgeInsets(top: self.tableView.contentInset.top, left: 0, bottom: 0, right: 0)
+                    
                     self.tableView.reloadData()
                 case .failure:
                     self.tableView.showNoConnectionPlaceholder()
@@ -149,7 +179,7 @@ extension SelectMovieViewController: UITableViewDataSource {
         case true:
             return searchArray.count
         case false:
-            return searchArray.count
+            return 0
         }
     }
     
@@ -163,8 +193,10 @@ extension SelectMovieViewController: UITableViewDataSource {
             model = searchArray[indexPath.row]
         }
         cell.movieTitleLabel!.text = model.title!
-        cell.movieReleaseDateLabel!.text = model.releaseDate!
-        cell.movieOverviewLabel!.text = model.overview!
+        cell.movieReleaseDateLabel!.text = model.showReleaseDate()
+        
+        cell.movieOverviewLabel!.text = model.showOverview()
+        cell.movieGenresLabel!.text = model.showGenre()
         
         if model.posterPath != nil {
             let imageUrl = URL(string: APIConstants.TheMovieDatabaseImageUrl + model.posterPath!)

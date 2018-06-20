@@ -10,8 +10,8 @@ import Foundation
 
 struct ServerConstants {
     private struct Domains {
-        static let Development = "http://10.0.1.5:8080"
-        static let Production = "http://10.0.1.5:8080"
+        static let Development = "http://localhost:8080"
+        static let Production = "http://localhost:8080"
     }
     
     private  static let Domain = Domains.Development

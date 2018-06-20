@@ -32,7 +32,7 @@ extension TheMovieDatabaseService: TargetType {
     var sampleData: Data {
         switch self {
         case .searchMovies:
-            return "{  \"page\": 1, \"total_results\": 18, \"total_pages\": 1, \"results\": [] }".data(using: String.Encoding.utf8)!
+            return "{ \"page\": 1, \"total_results\": 18, \"total_pages\": 1, \"results\": [] }".data(using: String.Encoding.utf8)!
         }
     }
     
