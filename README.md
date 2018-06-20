@@ -5,6 +5,9 @@ This repository refers to final project of discipline `Development Laboratory in
 ## My Watched Movies (front-end)
 Is an application to collect watched movies in an easy way.
 
+### Back-end
+https://github.com/felipekoblinger/ibd185-my-watched-movies-spring
+
 ## Cocoa Pods
 Dependencies used in this project:
 
