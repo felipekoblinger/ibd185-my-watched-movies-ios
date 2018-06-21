@@ -18,10 +18,10 @@ class DateRule: Rule {
         let date = DateConstants.dateFormatter.date(from: value)
         if date == nil { return false }
         
-        return date! <= Date()
+        return date! < Date()
     }
     
     func validate(_ value: Date) -> Bool {
-        return value <= Date()
+        return value < Date()
     }
 }

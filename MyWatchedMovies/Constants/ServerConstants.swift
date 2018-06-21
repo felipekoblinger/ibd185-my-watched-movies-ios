@@ -11,10 +11,10 @@ import Foundation
 struct ServerConstants {
     private struct Domains {
         static let Development = "http://localhost:8080"
-        static let Production = "http://localhost:8080"
+        static let Production = "https://my-watched-movies.herokuapp.com"
     }
     
-    private  static let Domain = Domains.Development
+    private  static let Domain = Domains.Production
     
     static let BaseURL = Domain
     

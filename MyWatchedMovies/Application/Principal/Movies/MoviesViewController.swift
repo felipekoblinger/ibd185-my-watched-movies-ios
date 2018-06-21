@@ -98,26 +98,28 @@ class MoviesViewController: UIViewController {
         provider.request(.movies()) { result in
             switch result {
             case let .success(response):
-                let moviesJson = try! response.mapJSON() as! [[String: Any]]
-                CoreStore.perform(
-                    asynchronous: { (transaction) -> Void in
-                        let objects = try! transaction.importUniqueObjects(
-                            Into<MovieEntity>(),
-                            sourceArray: moviesJson
-                        )
-                        if objects.isEmpty {
-                            transaction.deleteAll(From<MovieEntity>())
-                        } else {
-                            let ids = objects.map { $0.uniqueIDValue }
-                            transaction.deleteAll(From<MovieEntity>(),
-                                                  Where<MovieEntity>("NOT (uuid IN %@)", ids))
-                        }
-                        
-                },
-                    completion: { _ in
-                        completion?()
+                if response.statusCode == 200 {
+                    let moviesJson = try! response.mapJSON() as! [[String: Any]]
+                    CoreStore.perform(
+                        asynchronous: { (transaction) -> Void in
+                            let objects = try! transaction.importUniqueObjects(
+                                Into<MovieEntity>(),
+                                sourceArray: moviesJson
+                            )
+                            if objects.isEmpty {
+                                transaction.deleteAll(From<MovieEntity>())
+                            } else {
+                                let ids = objects.map { $0.uniqueIDValue }
+                                transaction.deleteAll(From<MovieEntity>(),
+                                                      Where<MovieEntity>("NOT (uuid IN %@)", ids))
+                            }
+                            
+                    },
+                        completion: { _ in
+                            completion?()
                     }
-                )
+                    )
+                }
             case let .failure(error):
                 completion?()
                 print(error)

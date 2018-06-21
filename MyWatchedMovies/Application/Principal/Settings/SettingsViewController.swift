@@ -28,10 +28,8 @@ class SettingsViewController: UITableViewController {
                     AuthenticationHelper.logout()
                 
                     let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let authViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
-                    self.present(authViewController, animated: true, completion: nil)
-//                    self.window?.rootViewController = mainUITabBarController
-                
+                    let authNavigationController = mainStoryboard.instantiateViewController(withIdentifier: "AuthNavigationController") as! UINavigationController
+                    self.present(authNavigationController, animated: true, completion: nil)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             

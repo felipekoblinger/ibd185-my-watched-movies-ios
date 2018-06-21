@@ -1491,7 +1491,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Lab-PU-snx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="89G-vg-2jb" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AuthNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="89G-vg-2jb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lSx-yI-1zm">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2399,6 +2399,6 @@
         <image name="Tab Bar - Statistics" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="v61-1E-tCs"/>
+        <segue reference="zXh-dQ-nhC"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -46,8 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AuthenticationHelper.shouldLogout() {
             AuthenticationHelper.logout()
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let authViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
-            self.window?.rootViewController = authViewController
+            let authNavigationController = mainStoryboard.instantiateViewController(withIdentifier: "AuthNavigationController") as! UINavigationController
+            self.window?.rootViewController = authNavigationController
         } else {
           AuthenticationHelper.refreshToken()
         }
