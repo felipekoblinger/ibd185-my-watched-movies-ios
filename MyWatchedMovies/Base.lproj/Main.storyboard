@@ -300,9 +300,10 @@
                         <constraints>
                             <constraint firstItem="hAE-M9-LtW" firstAttribute="trailing" secondItem="sAF-IS-f6Z" secondAttribute="trailing" id="5SW-68-mRA"/>
                             <constraint firstItem="sAF-IS-f6Z" firstAttribute="trailing" secondItem="hAE-M9-LtW" secondAttribute="trailing" id="8eY-Lc-g6B"/>
+                            <constraint firstItem="sAF-IS-f6Z" firstAttribute="top" secondItem="vdh-88-wqK" secondAttribute="bottom" constant="-3" id="AG1-4h-Ioy"/>
                             <constraint firstItem="vdh-88-wqK" firstAttribute="trailing" secondItem="hAE-M9-LtW" secondAttribute="trailing" id="Ea2-Gy-Ttr"/>
-                            <constraint firstItem="sAF-IS-f6Z" firstAttribute="top" secondItem="hAE-M9-LtW" secondAttribute="top" constant="66" id="LBK-nf-7u0"/>
                             <constraint firstItem="sAF-IS-f6Z" firstAttribute="leading" secondItem="hAE-M9-LtW" secondAttribute="leading" id="Og8-Pl-AiV"/>
+                            <constraint firstItem="hAE-M9-LtW" firstAttribute="bottom" secondItem="sAF-IS-f6Z" secondAttribute="bottom" id="UMk-76-Ogu"/>
                             <constraint firstItem="hAE-M9-LtW" firstAttribute="bottom" secondItem="sAF-IS-f6Z" secondAttribute="bottom" id="XIo-hE-FGx"/>
                             <constraint firstItem="sAF-IS-f6Z" firstAttribute="leading" secondItem="hAE-M9-LtW" secondAttribute="leading" id="eGD-ZC-Rxt"/>
                             <constraint firstItem="vdh-88-wqK" firstAttribute="leading" secondItem="hAE-M9-LtW" secondAttribute="leading" id="owb-YD-ciE"/>

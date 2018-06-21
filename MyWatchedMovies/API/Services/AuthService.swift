@@ -13,6 +13,7 @@ import PromiseKit
 
 enum AuthService {
     case auth(username: String, password: String)
+    case refresh()
     
     static func promiseAuth(username: String, password: String) -> Promise<JSON> {
         let provider = MoyaProvider<AuthService>()
@@ -41,6 +42,8 @@ extension AuthService: TargetType {
         switch self {
         case .auth:
             return "/auth/"
+        case .refresh:
+            return "/auth/refresh/"
         }
     }
     
@@ -48,12 +51,14 @@ extension AuthService: TargetType {
         switch self {
         case .auth:
             return .post
+        case .refresh:
+            return .get
         }
     }
     
     var sampleData: Data {
         switch self {
-        case.auth:
+        case .auth, .refresh:
             return "[{\"token\": \"anytoken\"}]".data(using: String.Encoding.utf8)!
         }
     }
@@ -62,6 +67,8 @@ extension AuthService: TargetType {
         switch self {
         case .auth(let username, let password):
             return .requestParameters(parameters: ["username": username, "password": password], encoding: JSONEncoding.default)
+        case .refresh:
+            return .requestPlain
         }
     }
     

@@ -25,8 +25,7 @@ class SettingsViewController: UITableViewController {
             
             alert.addAction(UIAlertAction(title: "Logout", style: UIAlertActionStyle.destructive, handler: {
                 action in
-                    let keychain = Keychain(service: KeychainConstants.MainService)
-                    keychain["token"] = nil
+                    AuthenticationHelper.logout()
                 
                     let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let authViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController

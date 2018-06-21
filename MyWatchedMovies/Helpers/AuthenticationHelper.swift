@@ -10,6 +10,8 @@ import Foundation
 
 import KeychainAccess
 import JWTDecode
+import Moya
+import SwiftyJSON
 
 class AuthenticationHelper {
     
@@ -29,5 +31,42 @@ class AuthenticationHelper {
         
         let jwt = try! decode(jwt: token!)
         return !jwt.expired
+    }
+    
+    static func refreshToken() {
+        if self.isLogged() {
+            let provider = MoyaProvider<AuthService>(
+                plugins: [
+                    AuthPlugin(token: self.keychain["token"]! )
+                ]
+            )
+            provider.request(.refresh()) { result in
+                switch result {
+                case let .success(response):
+                    print(response.statusCode)
+                    if response.statusCode == 200 {
+                        let json = JSON(response.data)
+                        self.setToken(token: json["token"].stringValue)
+                    }
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        }
+    }
+    
+    static func shouldLogout() -> Bool {
+        if !self.isLogged() && keychain["token"] != nil {
+            return true
+        }
+        return false
+    }
+    
+    static func logout() {
+        keychain["token"] = nil
+    }
+    
+    private static func setToken(token: String) {
+        self.keychain["token"] = token
     }
 }

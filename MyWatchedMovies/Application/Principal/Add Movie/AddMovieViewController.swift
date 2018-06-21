@@ -102,7 +102,7 @@ class AddMovieViewController: UIViewController {
 
                         self.performSegue(withIdentifier: "unwindToSelectMovieController", sender: self)
                         let statusAlert = StatusAlert.instantiate(withImage: UIImage(named: "Movie Added"),
-                                                                  title: "Movied added!",
+                                                                  title: "Movie added!",
                                                                   message: "The movie \(self.theMovieDatabase.title!) was added to my watched movies!")
                         statusAlert.showInKeyWindow()
                     }

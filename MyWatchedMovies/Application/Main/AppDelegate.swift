@@ -10,18 +10,19 @@ import UIKit
 import KeychainAccess
 import JWTDecode
 import CoreStore
+import Moya
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-    var timer: Timer!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         _ = CoreStoreDefault()
 
         if AuthenticationHelper.isLogged() {
+            AuthenticationHelper.refreshToken()
             let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let mainUITabBarController = mainStoryboard.instantiateViewController(withIdentifier: "PrincipalUITabBarController") as! PrincipalUITabBarController
             self.window?.rootViewController = mainUITabBarController
@@ -42,6 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        if AuthenticationHelper.shouldLogout() {
+            AuthenticationHelper.logout()
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let authViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
+            self.window?.rootViewController = authViewController
+        } else {
+          AuthenticationHelper.refreshToken()
+        }
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
@@ -52,27 +61,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-    // Testing
-    @objc func verifyTokenValidity() {
-        print("Observer method called")
-        postTokenAcquisitionScript();
-        //You may call your action method here, when the application did enter background.
-        //ie., self.pauseTimer() in your case.
-    }
-    
-    func getToken() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "tokenAcquired"), object: nil)
-    }
-    
-    func postTokenAcquisitionScript() {
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
-    }
-    
-    @objc func tick() {
-        timer.invalidate()
-        getToken()
-    }
-
 }
 
